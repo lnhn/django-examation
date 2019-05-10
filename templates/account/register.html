@@ -8,6 +8,7 @@
         <h1 class="text-center">注册成为新用户 </h1>
 
         <form action="" method="POST" novalidate>
+            {% csrf_token %}
             {{ user_form|crispy }}
             {{ detail_form|crispy }}
 

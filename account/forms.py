@@ -9,7 +9,7 @@ class RegistForms1(forms.ModelForm):
 
     class Meta:
         model=User
-        fields=['username',]
+        fields=['username']
 
     def clean_pw2(self):
         cd=self.cleaned_data
@@ -18,6 +18,11 @@ class RegistForms1(forms.ModelForm):
         return cd['pw1']
 
 class RegistForms2(forms.ModelForm):
+    sex_choice=((0,'男'),(1,'女'))
+    sex=forms.CharField(widget=forms.Select(choices=sex_choice),label='性别')
+
+
+
     class Meta:
         model=People
         fields=['name','age','sex','major','phone','prof']
