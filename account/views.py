@@ -12,7 +12,7 @@ def regiser(request):
         user_form=RegistForms1(request.POST)
         detail_form=RegistForms2(request.POST)
 
-        if user_form.is_valid() :#and detail_form.is_valid()
+        if user_form.is_valid() and detail_form.is_valid():
 
             new_user=user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['pw1'])
@@ -26,8 +26,7 @@ def regiser(request):
         else:
             return HttpResponse('You cannot register...')
     else:
-        user_form = RegistForms1(request.POST)
-        detail_form = RegistForms2(request.POST)
+        user_form = RegistForms1()
+        detail_form = RegistForms2()
         return render(request,'account/register.html',{'user_form':user_form,'detail_form':detail_form})
-
 

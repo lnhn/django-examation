@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 
 {% block title %} 注册 {% endblock %}
 
@@ -7,18 +7,18 @@
     <div class="col-6">
         <h1 class="text-center">注册成为新用户 </h1>
 
-        <form action="" method="POST" novalidate>
+        <form method="POST">
             {% csrf_token %}
+
             {{ user_form|crispy }}
             {{ detail_form|crispy }}
 
-            <button type="submit" class="btn btn-primary  ">提交</button>
-            <button type="submit" class="btn btn-primary  ">清空内容</button>
-
-
-
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary  ">提交</button>
+                    <button type="reset" class="btn btn-primary  ">清空</button>
+                </div>
+            </div>
         </form>
-        <hr class="mt-0 mb-4">
-
     </div>
 {% endblock %}

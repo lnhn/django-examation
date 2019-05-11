@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import People
+from .models import People,Major
 
 
 class RegistForms1(forms.ModelForm):
@@ -19,7 +19,8 @@ class RegistForms1(forms.ModelForm):
 
 class RegistForms2(forms.ModelForm):
     sex_choice=((0,'男'),(1,'女'))
-    sex=forms.CharField(widget=forms.Select(choices=sex_choice),label='性别')
+    sex=forms.ChoiceField(choices=sex_choice,label='性别')
+    major=forms.ModelChoiceField(queryset=Major.objects.all(),label='专业',empty_label=None)
 
 
 
