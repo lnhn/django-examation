@@ -27,3 +27,10 @@ class RegistForms2(forms.ModelForm):
     class Meta:
         model=People
         fields=['name','age','sex','major','phone','prof']
+
+
+class LoginForm(forms.ModelForm):
+    password=forms.CharField(widget=forms.PasswordInput,label="密码")
+    class Meta:
+        model=User
+        fields=['username','password']
