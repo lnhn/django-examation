@@ -1,0 +1,40 @@
+.bg-login-image {
+    background-image: url(../img/dog.jfif);
+}
+
+.help-block {
+    display: none;
+}
+
+
+.textinput, .select {
+
+    border-radius: 19px;}
+
+
+.btn-question{
+    margin-bottom: 10px;
+}
+
+.question{
+    width: 100%;
+    height:500px;
+    border: 1px;
+
+}
+
+.question-item{
+    margin: 40px;
+}
+
+.answer{
+    padding-bottom: 10px;
+}
+
+.mouse-hover{
+    cursor:pointer;
+}
+
+#examresult{
+    height:500px;
+}

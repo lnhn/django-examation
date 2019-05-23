@@ -24,7 +24,7 @@ def regiser(request):
             new_detail.save()
             return redirect(to='user_detail')
         else:
-            return redirect(to='user_register')
+            return HttpResponse("你的用户名存在问题，请重新登录！")
     else:
         user_form = RegistForms1()
         detail_form = RegistForms2()

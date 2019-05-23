@@ -15,7 +15,7 @@ class People(models.Model):
     sex=models.CharField(max_length=10,verbose_name="性别")
     phone=models.CharField(max_length=11,verbose_name="手机")
     major=models.ForeignKey(Major,verbose_name='专业',on_delete=models.CASCADE)
-    prof=models.BooleanField(verbose_name='专家')
+    prof=models.CharField(max_length=2,verbose_name='专家')
 
     def __str__(self):
         return self.name

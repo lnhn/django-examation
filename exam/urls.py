@@ -1,4 +1,7 @@
 from django.urls import path
-from .views import *
+from .views import exam,checkexamtype
 
-urlpatterns=[]
+urlpatterns=[
+    path('',exam,name='exam_index'),
+    path('<type>',checkexamtype)
+]

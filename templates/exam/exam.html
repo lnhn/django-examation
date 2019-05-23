@@ -1,0 +1,316 @@
+{% extends "exam/exam_base.html" %}
+
+{% block content %}
+
+      <!-- welcome Modal-->
+  <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">要开始考试么？</h5>
+
+        </div>
+        <div class="modal-body">请选择考试的类型，练习测试还是正式考试？</div>
+        <div class="modal-footer">
+          <a class="btn btn-secondary" href="#" id="practice">练习考试</a>
+          <a class="btn btn-primary" href="#" id="formal">正式考试</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+            <h3>欢迎来到Dr.Gas气博士考试系统</h3>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+
+
+
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.username }}</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  个人资料
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  活动记录
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  登出
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+
+
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">姓名</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ people.name }}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-people-carry fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">专业</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ people.major }}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-puzzle-piece fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1" id="timer">考试时间</div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ today }}</div>
+                        </div>
+                        <div class="col">
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-camera-retro fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Content Row -->
+
+
+            <!-- Content Row -->
+            <div class="row">
+
+                <!-- Content Column -->
+                <div class="col-xl-8 mb-4">
+
+                    <!-- Project Card Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">总共有<span id="total_quesiton_number">{{ n|length }}</span>道题目</h6>
+                        </div>
+                        <div class="question">
+
+                            <!-- 表格开始的地方-->
+                            <form method="post">
+                                {% csrf_token %}
+
+                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+
+
+                                    {% for q in questions %}
+
+                                        {% if forloop.counter == 1 %}
+                                            <div class="carousel-item active" id="q{{ forloop.counter }}">
+                                        {% else %}
+                                            <div class="carousel-item" id="q{{ forloop.counter }}">
+                                        {% endif %}
+
+                                         <div class="question-item">
+
+                                          <div><p>{{ q.q_t }}</p></div>
+
+                                             {% for key,value in q.ans.items  %}
+
+
+                                        <div class="input-group-prepend answer">
+                                            <div class="input-group-text">
+                                                <input type="radio" name="choice{{ q.id }}" value="{{ key }}"
+                                                       aria-label="Checkbox for following text input">
+                                            </div>
+                                            <div class="form-control col-8">{{ value }}</div>
+                                        </div>
+
+                                         {% endfor %}
+
+
+                                    </div>
+                                    </div>
+                                    {% endfor %}
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-2 mb-4 text-center">
+                        <div class="card bg-primary text-white shadow">
+                            <div id="prequestion" class="card-body text-white mouse-hover check_radio ">上一题 </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mb-4 text-center">
+                        <div class="card bg-primary text-white shadow mouse-hover">
+                            <div id="nextquestion" class="card-body text-white check_radio ">
+                                下一题
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mb-4 text-center">
+                        <div class="card bg-info text-white shadow">
+                            <button   type="reset" class="card-body text-white btn btn-danger">
+                                清空
+
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mb-4 text-center">
+                        <div class="card bg-danger text-white shadow">
+                            <a  class="card-body text-white btn btn-success mouse-hover" data-toggle="modal" data-target="#submitModal">
+
+                                提交
+
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                                <!-- submit Modal-->
+                                <div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">确认答题结束要提交吗？</h5>
+                                                <button class="close" type="button" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">如果确定，请选择提交！</div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                                                    取消
+                                                </button>
+                                                <button class="btn btn-primary" type="submit">提交</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <!---提交表格结束的地方-->
+                    </form>
+
+                    </div></div>
+
+                <div class="col-xl-4 mb-4">
+
+                  <!-- Illustrations -->
+                  <div class="card shadow mb-2" id="Timer">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">倒计时</h6>
+                      </div>
+                      <div class="card-body">
+
+                          <div class="text-center">
+                              <div class="h5 text-primary ">这次考试还剩下：</div>
+                              <div class="h2 text-danger font-weight-bold "><span class="se-txt">00</span>:<span class="se-txt">00</span>:<span class="se-txt">00</span></div>
+
+
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <!-- Approach -->
+                  <div class="card shadow mb-2">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">题目清单</h6>
+                      </div>
+                      <div class="card-body">
+                          {% for i in n %}
+                              <div  class="btn-question btn btn-secondary btn-circle btn-mid questionID mouse-hover check_radio " id="btn{{ i }}" >
+                                  {{ i }}
+                              </div>
+                          {% endfor %}
+
+                      </div>
+
+                  </div>
+
+
+              </div>
+            </div>
+
+
+
+        <!-- /.container-fluid -->
+        </div>
+
+      <!-- End of Main Content -->
+{% endblock %}

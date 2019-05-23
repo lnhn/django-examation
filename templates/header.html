@@ -5,7 +5,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
-              <li class="nav-item">
+              <li class="nav-item nav-link">
               欢迎你，{{ user.username }}
               </li>
               {% else %}
